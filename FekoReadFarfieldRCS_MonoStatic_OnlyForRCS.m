@@ -1,8 +1,9 @@
-function [RCS_complex_theta,RCS_complex_phi]=FekoReadFarfieldRCS_MonoStatic_OnlyForRCS(filename,OriHz)
+function [RCS_complex_theta,RCS_complex_phi,RCS_value]=FekoReadFarfieldRCS_MonoStatic_OnlyForRCS(filename,OriHz)
 % 
 
 RCS_complex_theta=zeros(OriHz,1);
 RCS_complex_phi=zeros(OriHz,1);
+RCS_value=zeros(OriHz,1);
 k = 1;
 
 fid = fopen(filename,'r');
@@ -18,6 +19,7 @@ while ~feof(fid)
         RCS_complex_theta(k)=2*sqrt(pi)*tmp1(1)*exp(1j*deg2rad(tmp1(2)));
 %         RCS_complex_phi=[RCS_complex_phi;2*sqrt(pi)*tmp1(3)*exp(1j*deg2rad(tmp1(4)))];
         RCS_complex_phi(k)=2*sqrt(pi)*tmp1(3)*exp(1j*deg2rad(tmp1(4)));
+        RCS_value(k)=tmp1(5);
         k = k+1; 
     end
 end
