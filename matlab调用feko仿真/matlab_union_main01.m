@@ -30,6 +30,7 @@ C_freq = (S_freq+E_freq)/2; %中心频率
 BW = E_freq - S_freq; %带宽
 RCS_theta=zeros(OriHz,Phi_N);  
 RCS_phi=zeros(OriHz,Phi_N);
+RCS_V=zeros(Phi_N);
 
 bar = waitbar(0,['初始phi角为',num2str(OriPhi),' 数据读取中...']);
 ii = 1;
@@ -54,12 +55,13 @@ B = dir(fullfile('',outname));
 filename_out=strcat(filepath,'\',B.name);
 
 %读取.out文件分件
-[RCS_complex_theta,RCS_complex_phi]=FekoReadFarfieldRCS_MonoStatic_OnlyForRCS(filename_out,OriHz);
+[RCS_complex_theta,RCS_complex_phi,RCS_value]=FekoReadFarfieldRCS_MonoStatic_OnlyForRCS(filename_out,OriHz);
 %PlotRangeSequence(Phi_deg,Freq_Hz,RCS_complex_theta,1024);%用好用同极化数据(θ极化)
 
 
 RCS_theta(:,ii)=RCS_complex_theta;
 RCS_phi(:,ii)=RCS_complex_phi;
+RCS_V(ii)=RCS_value;
 
 
 %% 第三部分：修改.pre文件，并保存
@@ -84,6 +86,7 @@ t = toc % 测试程序运行时间结尾，用于查看程序运行时间。
 %% 保存回波数据
 save RCS_theta.mat RCS_theta
 save RCS_phi.mat RCS_phi
+save RCS_V.mat RCS_V
 
 %% 第四部分： 成像
 %% 成像相关参数 初始化(为第四部分的成像做准备，与前三部分无关）
