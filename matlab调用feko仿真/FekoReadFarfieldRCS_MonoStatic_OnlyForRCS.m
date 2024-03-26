@@ -14,7 +14,7 @@ while ~feof(fid)
     tline = fgets(fid);%必须用fgets不能用fgetl
     logic = strncmp(Char1,tline,length(Char1));
     if logic
-        tmp1 =fscanf(fid,'%*g%*g %g%g %g%g',[1,4]);
+        tmp1 =fscanf(fid,'%*g%*g %g%g %g%g %g',[1,5]);
 %         RCS_complex_theta=[RCS_complex_theta;2*sqrt(pi)*tmp1(1)*exp(1j*deg2rad(tmp1(2)))];
         RCS_complex_theta(k)=2*sqrt(pi)*tmp1(1)*exp(1j*deg2rad(tmp1(2)));
 %         RCS_complex_phi=[RCS_complex_phi;2*sqrt(pi)*tmp1(3)*exp(1j*deg2rad(tmp1(4)))];

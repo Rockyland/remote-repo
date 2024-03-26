@@ -11,16 +11,16 @@ clc
 tic % 测试程序运行时间开始
 
 %% 初始化，参数设置
-Phi_N = 5143;% 方位角的个数A
-Phi_Step = 0.0175; %步进角度0.006°
+Phi_N = 9000;% 方位角的个数A
+Phi_Step = 0.02; %步进角度0.006°
 c=3e8; % 光速
 
 %% 确保该文件夹只有一个适用的.pre文件！！！
 
 %% 第一部分：找到.pre文件、分别读取各自的关键初始值
-filepath='D:\matlabcode\3_feko_with_matlab\北斗部件feko仿真\帆板';
+filepath='E:\Satelites\zhangye_paowumian\目标特性\PaoWM\01';
 cd(filepath);%切换到FEKO工程文件所在路径，这个一定要对应的替换哈！！！
-feko_path = '"D:\Program Files (x86)\Altair\2021\feko\bin\runfeko"';%指定FEKO的安装路径，注意引号的使用，先是单引号，再加上双引号。这是处理路径存在空格的情况
+feko_path = '"D:\Program Files\Altair\2021\feko\bin\runfeko"';%指定FEKO的安装路径，注意引号的使用，先是单引号，再加上双引号。这是处理路径存在空格的情况
 A = dir(fullfile('','*.pre'));  %读取文件夹下所有的*.pre文件。A = dir(fullfile('','*.pre'));  A = dir(fullfile('','*.fek'))
 prefile=strcat(filepath,'\',A.name);
 
@@ -30,7 +30,7 @@ C_freq = (S_freq+E_freq)/2; %中心频率
 BW = E_freq - S_freq; %带宽
 RCS_theta=zeros(OriHz,Phi_N);  
 RCS_phi=zeros(OriHz,Phi_N);
-RCS_V=zeros(Phi_N);
+RCS_V=zeros(OriHz,Phi_N);
 
 bar = waitbar(0,['初始phi角为',num2str(OriPhi),' 数据读取中...']);
 ii = 1;
@@ -61,7 +61,7 @@ filename_out=strcat(filepath,'\',B.name);
 
 RCS_theta(:,ii)=RCS_complex_theta;
 RCS_phi(:,ii)=RCS_complex_phi;
-RCS_V(ii)=RCS_value;
+RCS_V(:,ii)=RCS_value;
 
 
 %% 第三部分：修改.pre文件，并保存
